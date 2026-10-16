@@ -1,0 +1,376 @@
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme) prefix(kanban);
+@import 'tailwindcss/utilities.css' layer(utilities) prefix(kanban) source(none);
+
+@theme inline {
+    --color-gray-50: var(--gray-50);
+    --color-gray-100: var(--gray-100);
+    --color-gray-200: var(--gray-200);
+    --color-gray-400: var(--gray-400);
+    --color-gray-500: var(--gray-500);
+    --color-gray-700: var(--gray-700);
+    --color-gray-900: var(--gray-900);
+    --color-gray-950: var(--gray-950);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.fi-kanban {
+    @apply kanban:flex kanban:w-full kanban:min-w-0 kanban:flex-col kanban:gap-4;
+}
+
+.fi-kanban-layout {
+    @apply kanban:flex kanban:w-full kanban:min-w-0 kanban:flex-col kanban:items-start kanban:gap-4 kanban:lg:flex-row;
+}
+
+.fi-kanban-filters.fi-ta-ctn,
+.fi-kanban-filter-indicators.fi-ta-ctn {
+    @apply kanban:w-full kanban:min-w-0 kanban:flex-col;
+}
+
+.fi-kanban-filters > div,
+.fi-kanban-filter-indicators > .fi-ta-filter-indicators {
+    @apply kanban:w-full kanban:min-w-0;
+    border-block-end-width: 0;
+}
+
+.fi-kanban-filters .fi-ta-filters-below-content {
+    border-block-start-width: 0;
+}
+
+.fi-kanban-filters-sidebar {
+    @apply kanban:w-full kanban:shrink-0 kanban:lg:w-80;
+}
+
+.fi-kanban-board {
+    @apply kanban:flex kanban:w-full kanban:min-w-0 kanban:flex-1 kanban:items-start kanban:gap-4 kanban:overflow-x-auto kanban:pb-6;
+    min-height: calc(100vh - 13rem);
+}
+
+.fi-kanban-column {
+    @apply kanban:flex kanban:w-80 kanban:shrink-0 kanban:flex-col kanban:overflow-hidden kanban:rounded-xl kanban:bg-white kanban:dark:bg-gray-900;
+    max-height: calc(100vh - 12rem);
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--gray-950) 5%, transparent), 0 1px 3px rgb(0 0 0 / 0.05);
+}
+
+.dark .fi-kanban-column {
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.1), 0 1px 3px rgb(0 0 0 / 0.1);
+}
+
+.fi-kanban-column-accent {
+    @apply kanban:w-full kanban:shrink-0;
+    height: 3px;
+    background-color: var(--color-500);
+}
+
+.fi-kanban-column-header {
+    border-bottom: 1px solid color-mix(in oklab, var(--gray-200) 80%, transparent);
+    @apply kanban:flex kanban:shrink-0 kanban:flex-col kanban:items-stretch kanban:gap-2.5 kanban:px-4 kanban:py-3 kanban:dark:border-white/10;
+}
+
+.fi-kanban-column-heading {
+    @apply kanban:flex kanban:min-w-0 kanban:items-center kanban:justify-between kanban:gap-2;
+}
+
+.fi-kanban-column-label {
+    @apply kanban:flex kanban:min-w-0 kanban:items-center kanban:gap-2;
+}
+
+.fi-kanban-column-label > .fi-badge {
+    flex-shrink: 0;
+}
+
+.fi-kanban-column-header > .fi-badge {
+    align-self: flex-start;
+}
+
+.fi-kanban-column-icon {
+    @apply kanban:size-4 kanban:shrink-0 kanban:text-gray-500 kanban:dark:text-gray-400;
+}
+
+.fi-kanban-column-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    overflow-wrap: anywhere;
+    @apply kanban:min-w-0 kanban:text-gray-950 kanban:dark:text-white;
+}
+
+.fi-kanban-column-actions {
+    @apply kanban:flex kanban:shrink-0 kanban:items-center kanban:gap-1;
+}
+
+.fi-kanban-column-cards {
+    @apply kanban:flex kanban:min-h-24 kanban:flex-1 kanban:flex-col kanban:gap-3 kanban:overflow-y-auto kanban:p-3;
+    transition: background-color 160ms ease;
+}
+
+.fi-kanban-column-cards:has(> .sortable-ghost) {
+    background-color: color-mix(in oklab, var(--primary-500) 3%, transparent);
+}
+
+.fi-kanban-empty-state.fi-ta-empty-state {
+    @apply kanban:px-3 kanban:py-8;
+    border: 0;
+}
+
+.fi-kanban-column-cards:has(> .fi-kanban-card) > .fi-kanban-empty-state {
+    display: none;
+}
+
+.fi-kanban-card {
+    @apply kanban:relative kanban:rounded-xl kanban:bg-white kanban:p-4 kanban:dark:bg-gray-900;
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--gray-950) 5%, transparent), 0 1px 2px rgb(0 0 0 / 0.05);
+    transition: background-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+@media (hover: hover) {
+    .fi-kanban-card:not(.fi-kanban-card-flat):not(.sortable-chosen):hover {
+        box-shadow: 0 0 0 1px color-mix(in oklab, var(--gray-950) 10%, transparent), 0 4px 8px -3px rgb(0 0 0 / 0.1);
+    }
+}
+
+.dark .fi-kanban-card {
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.1), 0 1px 2px rgb(0 0 0 / 0.1);
+}
+
+@media (hover: hover) {
+    .dark .fi-kanban-card:not(.fi-kanban-card-flat):not(.sortable-chosen):hover {
+        box-shadow: 0 0 0 1px rgb(255 255 255 / 0.18), 0 4px 8px -3px rgb(0 0 0 / 0.2);
+    }
+}
+
+.fi-kanban-card:not(.fi-kanban-card-flat):focus-within {
+    box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary-500) 35%, transparent), 0 1px 3px rgb(0 0 0 / 0.08);
+}
+
+.fi-kanban-card-draggable,
+.fi-kanban-card-drag-handle {
+    @apply kanban:select-none kanban:cursor-grab kanban:active:cursor-grabbing;
+}
+
+.fi-kanban-card-header {
+    @apply kanban:mb-3 kanban:flex kanban:items-start kanban:gap-2;
+}
+
+.fi-kanban-card-drag-handle {
+    @apply kanban:shrink-0 kanban:rounded-md kanban:p-0.5 kanban:text-gray-400 kanban:dark:text-gray-500;
+    margin-inline-start: -0.125rem;
+    touch-action: none;
+    transition: background-color 160ms ease, color 160ms ease;
+}
+
+.fi-kanban-card-drag-handle:hover {
+    @apply kanban:bg-gray-100 kanban:text-gray-700 kanban:dark:bg-white/5 kanban:dark:text-gray-400;
+}
+
+.fi-kanban-card-drag-handle:focus-visible {
+    outline: 2px solid var(--primary-500);
+    outline-offset: 2px;
+}
+
+.fi-kanban-card-drag-handle-icon {
+    @apply kanban:size-4;
+}
+
+.fi-kanban-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    overflow-wrap: anywhere;
+    @apply kanban:min-w-0 kanban:flex-1 kanban:text-start kanban:text-gray-950 kanban:dark:text-white;
+}
+
+.fi-kanban-card-title > .fi-link {
+    max-width: 100%;
+    justify-content: flex-start;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-align: start;
+}
+
+.fi-kanban-card-actions {
+    border-top: 1px solid var(--kanban-color-gray-100);
+    @apply kanban:mt-3 kanban:flex kanban:flex-wrap kanban:items-center kanban:justify-end kanban:gap-2 kanban:pt-3 kanban:dark:border-white/10;
+}
+
+.fi-kanban-card-compact .fi-kanban-card-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+}
+
+.fi-kanban-card-compact {
+    @apply kanban:rounded-lg kanban:p-3;
+}
+
+.fi-kanban-card-compact .fi-kanban-card-header {
+    @apply kanban:mb-1.5;
+}
+
+.fi-kanban-card-compact .fi-kanban-card-actions {
+    @apply kanban:mt-2 kanban:gap-1.5 kanban:pt-2;
+}
+
+.fi-kanban-column-cards:has(> .fi-kanban-card-flat):not(:has(> .fi-kanban-card:not(.fi-kanban-card-flat))) {
+    gap: 0;
+}
+
+.fi-kanban-card.fi-kanban-card-flat {
+    @apply kanban:rounded-none kanban:p-3;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.fi-kanban-column-cards > .fi-kanban-card-flat:has(+ .fi-kanban-card-flat) {
+    border-block-end: 1px solid color-mix(in oklab, var(--gray-950) 7%, transparent);
+}
+
+.dark .fi-kanban-column-cards > .fi-kanban-card-flat:has(+ .fi-kanban-card-flat) {
+    border-block-end-color: rgb(255 255 255 / 0.1);
+}
+
+@media (hover: hover) {
+    .fi-kanban-card-flat:not(.sortable-chosen):hover {
+        background-color: color-mix(in oklab, var(--gray-950) 3%, transparent);
+    }
+
+    .dark .fi-kanban-card-flat:not(.sortable-chosen):hover {
+        background-color: rgb(255 255 255 / 0.05);
+    }
+}
+
+.fi-kanban-card-flat:focus-within {
+    background-color: color-mix(in oklab, var(--gray-950) 3%, transparent);
+}
+
+.dark .fi-kanban-card-flat:focus-within {
+    background-color: rgb(255 255 255 / 0.05);
+}
+
+.fi-kanban-card-flat .fi-kanban-card-header {
+    @apply kanban:mb-2;
+}
+
+.fi-kanban-card-flat .fi-kanban-card-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+}
+
+.fi-kanban-card-flat .fi-kanban-card-actions {
+    @apply kanban:mt-2 kanban:pt-0;
+    border-block-start-width: 0;
+}
+
+.fi-kanban-card-header-actions {
+    @apply kanban:ms-auto kanban:flex kanban:min-w-0 kanban:flex-wrap kanban:items-center kanban:justify-end kanban:gap-1;
+}
+
+.fi-kanban-card-accent {
+    @apply kanban:ps-5;
+    background-image: linear-gradient(115deg, color-mix(in oklab, var(--kanban-card-accent) 7%, transparent), transparent 65%);
+}
+
+.fi-kanban-card-accent::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block: 0.5rem;
+    width: 3px;
+    border-radius: 999px;
+    background-color: var(--kanban-card-accent);
+}
+
+.fi-kanban-column-pagination {
+    @apply kanban:flex kanban:shrink-0 kanban:items-center kanban:justify-between kanban:gap-2 kanban:px-3 kanban:py-2 kanban:text-xs kanban:text-gray-500 kanban:dark:text-gray-400;
+    border-top: 1px solid color-mix(in oklab, var(--gray-200) 80%, transparent);
+    font-variant-numeric: tabular-nums;
+}
+
+.dark .fi-kanban-column-pagination {
+    border-top-color: rgb(255 255 255 / 0.1);
+}
+
+.fi-kanban-column-load-more {
+    @apply kanban:relative kanban:flex kanban:shrink-0 kanban:flex-col kanban:items-center kanban:gap-2 kanban:py-3 kanban:text-xs kanban:text-gray-500 kanban:dark:text-gray-400;
+    font-variant-numeric: tabular-nums;
+}
+
+.fi-kanban-column-load-more-trigger {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+}
+
+.sorting .fi-kanban-column-load-more-trigger {
+    display: none;
+}
+
+.fi-kanban-board,
+.fi-kanban-column-cards {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--gray-400) 35%, transparent) transparent;
+}
+
+.fi-kanban-board::-webkit-scrollbar {
+    height: 6px;
+}
+
+.fi-kanban-board::-webkit-scrollbar-track,
+.fi-kanban-column-cards::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.fi-kanban-board::-webkit-scrollbar-thumb,
+.fi-kanban-column-cards::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--gray-400) 35%, transparent);
+    border-radius: 99px;
+}
+
+.fi-kanban-column-cards::-webkit-scrollbar {
+    width: 4px;
+}
+
+.fi-kanban-card.sortable-chosen {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary-500) 40%, transparent), 0 6px 16px -6px rgb(0 0 0 / 0.18);
+}
+
+.fi-kanban-card.sortable-ghost {
+    background-color: color-mix(in oklab, var(--primary-500) 6%, transparent);
+    box-shadow: none;
+    opacity: 1;
+    outline: 1px dashed color-mix(in oklab, var(--primary-500) 45%, transparent);
+    outline-offset: -1px;
+}
+
+.fi-kanban-card.sortable-ghost > * {
+    visibility: hidden;
+}
+
+.fi-kanban-card.sortable-drag {
+    @apply kanban:cursor-grabbing;
+    background-color: white;
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary-500) 30%, transparent), 0 16px 28px -10px rgb(0 0 0 / 0.25), 0 6px 10px -6px rgb(0 0 0 / 0.15);
+    opacity: 0.98;
+    outline: none;
+}
+
+.fi-kanban-card.sortable-drag > * {
+    visibility: visible;
+}
+
+.dark .fi-kanban-card.sortable-drag {
+    background-color: var(--gray-900);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.15), 0 16px 28px -10px rgb(0 0 0 / 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fi-kanban-column-cards,
+    .fi-kanban-card,
+    .fi-kanban-card-drag-handle {
+        transition: none;
+    }
+}

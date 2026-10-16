@@ -1,0 +1,16 @@
+{
+    "name": "eduardoribeirodev/filament-kanban-demo",
+    "description": "An isolated Filament Kanban documentation demo with fictional data.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "laravel/framework": "^12.0",
+        "filament/filament": "^5.0",
+        "eduardoribeirodev/filament-kanban": "dev-main"
+    },
+    "repositories": [{ "type": "path", "url": "../.." }],
+    "autoload": { "psr-4": { "KanbanDemo\\": "src/" } },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,8 @@
+/vendor
+/storage
+/bootstrap/cache/*.php
+/database/*.sqlite*
+/public/css
+/public/js
+/public/fonts
+/composer.lock
