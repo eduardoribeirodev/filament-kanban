@@ -28,6 +28,10 @@
     @apply kanban:w-full kanban:min-w-0 kanban:flex-col;
 }
 
+.fi-kanban-filters.fi-ta-ctn:not(.fi-ta-ctn-with-header) {
+    overflow: visible;
+}
+
 .fi-kanban-filters > div,
 .fi-kanban-filter-indicators > .fi-ta-filter-indicators {
     @apply kanban:w-full kanban:min-w-0;
